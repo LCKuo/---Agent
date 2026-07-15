@@ -48,20 +48,9 @@
 
 ## 4. 目標工作流程
 
-為避免完整流程在 GitHub 被縮成難以閱讀的長圖，本節改為三頁式導覽。下方總覽可直接看懂三個階段；點選左右導覽即可閱讀各階段的大圖，不需要在圖片內上下拖曳或另外放大。
+下圖以三列蛇形路徑呈現完整流程：第一列由左至右、第二列由右至左、第三列再由左至右。藍色為 AI Agent、黃色為人工核准、綠色為案件或正式流程、灰色為資料與事件。
 
-```mermaid
-%%{init: {"theme":"base", "flowchart":{"nodeSpacing":65,"rankSpacing":70}, "themeVariables":{"fontSize":"20px"}}}%%
-flowchart LR
-  S1["① 前段<br/>潛客研究與開發信"] --> S2["② 中段<br/>郵件承接與 RFQ 分流"] --> S3["③ 後段<br/>文件、比價與 ERP 草稿"]
-
-  classDef stage fill:#E8F3FF,stroke:#1677FF,stroke-width:3px,color:#102A43,font-size:20px;
-  class S1,S2,S3 stage;
-```
-
-|  | 流程頁面 |  |
-|:---|:---:|---:|
-|  | [從第 1 頁開始：前段業務開發 →](流程導覽/01_前段業務開發.md) | [直接前往第 3 頁：文件與 ERP →](流程導覽/03_文件與ERP.md) |
+[![承析國際 AI Agent 完整目標工作流程](assets/target-workflow.svg)](assets/target-workflow.svg)
 
 ## 5. 功能規格
 
