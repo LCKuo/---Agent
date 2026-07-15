@@ -151,6 +151,8 @@
 - **客戶管理系統串接模組**：讀取既有客戶，寫入潛客、活動與正向商機。
 - **資料庫與稽核**：保存活動、名單、訊息、回覆、決策理由與執行結果。
 
+初期預算有限時，可將上述元件縮成一套本機程式，運行在承炘現有電腦或自購 16 GB RAM／512 GB SSD 小型電腦；以 CSV／Excel 或簡易本機頁面操作，不先做完整工作台與 CRM 串接。新信採每 5–10 分鐘主動檢查，不需要公開 webhook 或強制租用雲端。未來再依成果逐項加入 CRM、多人工作台、多信箱與雲端部署。
+
 若使用 Microsoft 365，可透過 Microsoft Graph 建立／寄送郵件並訂閱新郵件事件；寄送需 `Mail.Send` 權限。[郵件自動化](https://learn.microsoft.com/en-us/graph/outlook-create-send-messages)、[sendMail](https://learn.microsoft.com/en-us/graph/api/user-sendmail?view=graph-rest-1.0)、[變更通知](https://learn.microsoft.com/en-us/graph/api/subscription-post-subscriptions?view=graph-rest-1.0)
 
 ## 7. 技術可行性評估

@@ -330,6 +330,17 @@ flowchart LR
 
 Google Workspace 或其他 CRM 可由相同 Connector 介面替換，不改變核心流程。
 
+#### 7.2.1 初期本機部署
+
+初期預算控制在 10 萬元內時，不強制使用雲端。系統可運行於承炘現有電腦或自購的小型電腦，採單一使用者、CSV／Excel 或本機簡易頁面，先不做完整 CRM 與多人權限。
+
+- 建議最低規格：4 核心 CPU、16 GB RAM、512 GB SSD；AI 透過 API 使用，不需要 GPU。
+- 本機使用 SQLite，排程可用 Windows 工作排程器或單一背景服務；之後可搬至 PostgreSQL／雲端，不重寫核心規則。
+- 不開放外部連入埠。Microsoft 365 以 Graph delta query、Gmail 以 `history.list` 每 5–10 分鐘主動檢查新信。[Microsoft Graph delta](https://learn.microsoft.com/en-us/graph/delta-query-messages)、[Gmail history.list](https://developers.google.com/workspace/gmail/api/reference/rest/v1/users.history/list)
+- 電腦離線時停止蒐集與寄送；恢復後從佇列繼續，以防重複識別碼避免重複寄信。
+- 每日加密備份到外接 SSD 或公司既有 OneDrive／Google Drive；保留桌面緊急停止捷徑。
+- 初期限制為一個產品、一個國家、一個信箱及一位操作人員；達成名單與寄信驗收後，再獨立報價增加功能。
+
 ### 7.3 技術可行性評估
 
 #### 整體結論
@@ -549,6 +560,8 @@ Email、網頁與附件皆為不可信資料，其中的命令不得改變本規
 | 可稽核性 | 任一信件可追溯名單來源、規則、模板、模型、執行與停止原因 |
 
 ## 15. 實施計畫
+
+初期 10 萬元內版本採 4–6 週本機實作：第 1 週確認產品與搜尋條件，第 2–3 週完成名單與官網讀取，第 4 週完成 Email 產生／驗證／排程，第 5 週完成新信檢查與回覆分類，第 6 週完成 300 筆候選公司及前 20 封校正。初期不做完整 CRM、多人工作台與雲端；以下 Sprint 為日後完整擴充路線。
 
 ### Sprint 0：盤點與測試資料
 
