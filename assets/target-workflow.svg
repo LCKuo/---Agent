@@ -1,12 +1,12 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="670" viewBox="0 0 1200 670" role="img" aria-labelledby="title desc">
-  <title id="title">承析國際 AI Agent 完整目標工作流程</title>
-  <desc id="desc">從潛客資料、AI 研究、人工覆核、郵件開發、回覆分流、RFQ 文件分析、供應商比價、貿易文件核對，到人工核准後進入 ERP 與報關的十五步流程。</desc>
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="520" viewBox="0 0 1200 520" role="img" aria-labelledby="title desc">
+  <title id="title">承析國際 AI 客戶開發 Agent 自動化流程</title>
+  <desc id="desc">活動設定後，系統自動匯入潛客、研究評分、驗證 Email、產生個人化開發信、寄送、跟進及分類回覆；只有低信心例外與正向商機需要人工介入。</desc>
   <defs>
     <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto" markerUnits="strokeWidth">
       <path d="M 0 0 L 10 5 L 0 10 z" fill="#486581"/>
     </marker>
     <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%">
-      <feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="#102A43" flood-opacity="0.16"/>
+      <feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="#102a43" flood-opacity="0.16"/>
     </filter>
     <style>
       .bg { fill: #ffffff; }
@@ -15,26 +15,25 @@
       .node { stroke-width: 2.5; filter: url(#shadow); }
       .source { fill: #f1f5f9; stroke: #64748b; }
       .agent { fill: #e6f2ff; stroke: #1677ff; }
+      .rule { fill: #f1ecff; stroke: #6f42c1; }
       .human { fill: #fff3d6; stroke: #d48806; }
       .result { fill: #eaf7e6; stroke: #389e0d; }
       .node-title { font: 700 18px "Microsoft JhengHei", "Noto Sans TC", sans-serif; fill: #102a43; text-anchor: middle; }
-      .node-text { font: 500 16px "Microsoft JhengHei", "Noto Sans TC", sans-serif; fill: #243b53; text-anchor: middle; }
+      .node-text { font: 500 15px "Microsoft JhengHei", "Noto Sans TC", sans-serif; fill: #243b53; text-anchor: middle; }
       .step-circle { fill: #334e68; }
       .step-no { font: 700 14px Arial, sans-serif; fill: #ffffff; text-anchor: middle; dominant-baseline: central; }
       .arrow { fill: none; stroke: #486581; stroke-width: 3; marker-end: url(#arrow); }
-      .handoff { font: 700 15px "Microsoft JhengHei", "Noto Sans TC", sans-serif; fill: #7c4a03; text-anchor: middle; }
+      .handoff { font: 700 15px "Microsoft JhengHei", "Noto Sans TC", sans-serif; fill: #6f4200; text-anchor: middle; }
+      .note { font: 700 16px "Microsoft JhengHei", "Noto Sans TC", sans-serif; fill: #243b53; text-anchor: middle; }
       .legend { font: 500 14px "Microsoft JhengHei", "Noto Sans TC", sans-serif; fill: #486581; }
     </style>
   </defs>
 
-  <rect class="bg" x="0" y="0" width="1200" height="670" rx="18"/>
-
+  <rect class="bg" x="0" y="0" width="1200" height="520" rx="18"/>
   <rect class="lane" x="18" y="42" width="1164" height="165" rx="16"/>
   <rect class="lane" x="18" y="252" width="1164" height="165" rx="16"/>
-  <rect class="lane" x="18" y="462" width="1164" height="165" rx="16"/>
-  <text class="lane-title" x="36" y="31">① 前段｜潛客研究與開發</text>
-  <text class="lane-title" x="36" y="241">② 中段｜郵件承接與 RFQ 分流（由右往左）</text>
-  <text class="lane-title" x="36" y="451">③ 後段｜文件、比價與正式流程</text>
+  <text class="lane-title" x="36" y="31">① 名單到寄送｜設定一次，正常案件自動放行</text>
+  <text class="lane-title" x="36" y="241">② 跟進到商機｜系統自動處理，正向回覆才交給業務（由右往左）</text>
 
   <!-- Row 1 arrows -->
   <path class="arrow" d="M 224 124 H 263"/>
@@ -42,43 +41,40 @@
   <path class="arrow" d="M 696 124 H 735"/>
   <path class="arrow" d="M 932 124 H 971"/>
 
-  <!-- Step 1 -->
-  <rect class="node source" x="28" y="76" width="196" height="96" rx="13"/>
+  <rect class="node human" x="28" y="76" width="196" height="96" rx="13"/>
   <circle class="step-circle" cx="47" cy="94" r="13"/><text class="step-no" x="47" y="94">1</text>
-  <text class="node-title" x="126" y="112">潛客資料</text>
-  <text class="node-text" x="126" y="139">CRM／名單 CSV</text>
-  <text class="node-text" x="126" y="160">授權資料供應商</text>
+  <text class="node-title" x="126" y="112">活動設定一次</text>
+  <text class="node-text" x="126" y="139">ICP／產品知識</text>
+  <text class="node-text" x="126" y="160">寄送與停止政策</text>
 
-  <!-- Step 2 -->
-  <rect class="node agent" x="264" y="76" width="196" height="96" rx="13"/>
+  <rect class="node source" x="264" y="76" width="196" height="96" rx="13"/>
   <circle class="step-circle" cx="283" cy="94" r="13"/><text class="step-no" x="283" y="94">2</text>
-  <text class="node-title" x="362" y="113">A1 研究 Agent</text>
-  <text class="node-text" x="362" y="141">公司研究、去重</text>
-  <text class="node-text" x="362" y="162">ICP 評分與證據</text>
+  <text class="node-title" x="362" y="112">匯入潛客</text>
+  <text class="node-text" x="362" y="139">CRM／CSV</text>
+  <text class="node-text" x="362" y="160">授權資料來源</text>
 
-  <!-- Step 3 -->
-  <rect class="node human" x="500" y="76" width="196" height="96" rx="13"/>
+  <rect class="node agent" x="500" y="76" width="196" height="96" rx="13"/>
   <circle class="step-circle" cx="519" cy="94" r="13"/><text class="step-no" x="519" y="94">3</text>
-  <text class="node-title" x="598" y="119">業務覆核</text>
-  <text class="node-text" x="598" y="150">確認合格潛客</text>
+  <text class="node-title" x="598" y="112">A1 潛客研究</text>
+  <text class="node-text" x="598" y="139">公司研究、去重</text>
+  <text class="node-text" x="598" y="160">ICP 評分與證據</text>
 
-  <!-- Step 4 -->
-  <rect class="node agent" x="736" y="76" width="196" height="96" rx="13"/>
+  <rect class="node rule" x="736" y="76" width="196" height="96" rx="13"/>
   <circle class="step-circle" cx="755" cy="94" r="13"/><text class="step-no" x="755" y="94">4</text>
-  <text class="node-title" x="834" y="113">A2 開發信 Agent</text>
-  <text class="node-text" x="834" y="141">個人化信件草稿</text>
-  <text class="node-text" x="834" y="162">建立 CRM 任務</text>
+  <text class="node-title" x="834" y="112">自動資格檢查</text>
+  <text class="node-text" x="834" y="139">Email 驗證</text>
+  <text class="node-text" x="834" y="160">抑制名單與政策</text>
 
-  <!-- Step 5 -->
-  <rect class="node human" x="972" y="76" width="196" height="96" rx="13"/>
+  <rect class="node agent" x="972" y="76" width="196" height="96" rx="13"/>
   <circle class="step-circle" cx="991" cy="94" r="13"/><text class="step-no" x="991" y="94">5</text>
-  <text class="node-title" x="1070" y="119">人員核准</text>
-  <text class="node-text" x="1070" y="150">收件人與內容</text>
+  <text class="node-title" x="1070" y="112">A2 個人化 Email</text>
+  <text class="node-text" x="1070" y="139">主旨、內容、CTA</text>
+  <text class="node-text" x="1070" y="160">產品事實檢查</text>
 
-  <!-- Row 1 to row 2 -->
+  <!-- transition -->
   <path class="arrow" d="M 1070 172 V 284"/>
-  <rect x="983" y="211" width="174" height="28" rx="14" fill="#fff7e6" stroke="#d48806"/>
-  <text class="handoff" x="1070" y="230">核准後寄出</text>
+  <rect x="972" y="211" width="196" height="28" rx="14" fill="#eefbe9" stroke="#389e0d"/>
+  <text class="handoff" x="1070" y="230">規則通過即自動寄送</text>
 
   <!-- Row 2 arrows, right to left -->
   <path class="arrow" d="M 972 334 H 933"/>
@@ -86,86 +82,41 @@
   <path class="arrow" d="M 500 334 H 461"/>
   <path class="arrow" d="M 264 334 H 225"/>
 
-  <!-- Step 6 -->
-  <rect class="node source" x="972" y="286" width="196" height="96" rx="13"/>
+  <rect class="node agent" x="972" y="286" width="196" height="96" rx="13"/>
   <circle class="step-circle" cx="991" cy="304" r="13"/><text class="step-no" x="991" y="304">6</text>
-  <text class="node-title" x="1070" y="329">公司郵箱</text>
-  <text class="node-text" x="1070" y="358">寄出核准信件</text>
+  <text class="node-title" x="1070" y="324">A3 自動寄送</text>
+  <text class="node-text" x="1070" y="350">排程與冪等</text>
+  <text class="node-text" x="1070" y="371">送達／退信監控</text>
 
-  <!-- Step 7 -->
-  <rect class="node source" x="736" y="286" width="196" height="96" rx="13"/>
+  <rect class="node agent" x="736" y="286" width="196" height="96" rx="13"/>
   <circle class="step-circle" cx="755" cy="304" r="13"/><text class="step-no" x="755" y="304">7</text>
-  <text class="node-title" x="834" y="329">客戶來信事件</text>
-  <text class="node-text" x="834" y="358">回覆與附件入列</text>
+  <text class="node-title" x="834" y="324">自動跟進</text>
+  <text class="node-text" x="834" y="350">未回覆才寄送</text>
+  <text class="node-text" x="834" y="371">最多 2 次</text>
 
-  <!-- Step 8 -->
   <rect class="node agent" x="500" y="286" width="196" height="96" rx="13"/>
   <circle class="step-circle" cx="519" cy="304" r="13"/><text class="step-no" x="519" y="304">8</text>
-  <text class="node-title" x="598" y="324">A3 溝通 Agent</text>
-  <text class="node-text" x="598" y="350">分類、翻譯</text>
-  <text class="node-text" x="598" y="371">回覆草稿</text>
+  <text class="node-title" x="598" y="324">A4 回覆分流</text>
+  <text class="node-text" x="598" y="350">正向／問題／拒絕</text>
+  <text class="node-text" x="598" y="371">退訂／退信／未知</text>
 
-  <!-- Step 9 -->
-  <rect class="node human" x="264" y="286" width="196" height="96" rx="13"/>
+  <rect class="node rule" x="264" y="286" width="196" height="96" rx="13"/>
   <circle class="step-circle" cx="283" cy="304" r="13"/><text class="step-no" x="283" y="304">9</text>
-  <text class="node-title" x="362" y="329">業務接手</text>
-  <text class="node-text" x="362" y="358">判斷商機與需求</text>
+  <text class="node-title" x="362" y="324">自動採取動作</text>
+  <text class="node-text" x="362" y="350">停止／延後／回覆</text>
+  <text class="node-text" x="362" y="371">或建立商機</text>
 
-  <!-- Step 10 -->
   <rect class="node result" x="28" y="286" width="196" height="96" rx="13"/>
   <circle class="step-circle" cx="47" cy="304" r="13"/><text class="step-no" x="47" y="304">10</text>
-  <text class="node-title" x="126" y="329">建立商機</text>
-  <text class="node-text" x="126" y="358">建立 RFQ 案件</text>
+  <text class="node-title" x="126" y="324">正向商機</text>
+  <text class="node-text" x="126" y="350">CRM 建檔與通知</text>
+  <text class="node-text" x="126" y="371">業務開始接手</text>
 
-  <!-- Row 2 to row 3 -->
-  <path class="arrow" d="M 126 382 V 494"/>
-  <rect x="39" y="387" width="174" height="26" rx="13" fill="#eefbe9" stroke="#389e0d"/>
-  <text class="handoff" x="126" y="406">確認有商機</text>
+  <rect x="82" y="436" width="1036" height="48" rx="24" fill="#f8fafc" stroke="#bcccdc" stroke-width="1.5"/>
+  <text class="note" x="600" y="466">正常名單全程自動｜只有低信心與資料衝突進例外佇列｜正向回覆才由業務接手</text>
 
-  <!-- Row 3 arrows -->
-  <path class="arrow" d="M 224 544 H 263"/>
-  <path class="arrow" d="M 460 544 H 499"/>
-  <path class="arrow" d="M 696 544 H 735"/>
-  <path class="arrow" d="M 932 544 H 971"/>
-
-  <!-- Step 11 -->
-  <rect class="node agent" x="28" y="496" width="196" height="96" rx="13"/>
-  <circle class="step-circle" cx="47" cy="514" r="13"/><text class="step-no" x="47" y="514">11</text>
-  <text class="node-title" x="126" y="534">A4 文件 Agent</text>
-  <text class="node-text" x="126" y="559">擷取、引用</text>
-  <text class="node-text" x="126" y="580">缺漏與矛盾</text>
-
-  <!-- Step 12 -->
-  <rect class="node agent" x="264" y="496" width="196" height="96" rx="13"/>
-  <circle class="step-circle" cx="283" cy="514" r="13"/><text class="step-no" x="283" y="514">12</text>
-  <text class="node-title" x="362" y="534">A6 比價 Agent</text>
-  <text class="node-text" x="362" y="559">供應商報價</text>
-  <text class="node-text" x="362" y="580">條件正規化比較</text>
-
-  <!-- Step 13 -->
-  <rect class="node agent" x="500" y="496" width="196" height="96" rx="13"/>
-  <circle class="step-circle" cx="519" cy="514" r="13"/><text class="step-no" x="519" y="514">13</text>
-  <text class="node-title" x="598" y="534">A5 單據 Agent</text>
-  <text class="node-text" x="598" y="559">貿易文件勾稽</text>
-  <text class="node-text" x="598" y="580">建立 ERP 草稿</text>
-
-  <!-- Step 14 -->
-  <rect class="node human" x="736" y="496" width="196" height="96" rx="13"/>
-  <circle class="step-circle" cx="755" cy="514" r="13"/><text class="step-no" x="755" y="514">14</text>
-  <text class="node-title" x="834" y="534">貿易人員核准</text>
-  <text class="node-text" x="834" y="559">確認單據與欄位</text>
-  <text class="node-text" x="834" y="580">批准正式執行</text>
-
-  <!-- Step 15 -->
-  <rect class="node result" x="972" y="496" width="196" height="96" rx="13"/>
-  <circle class="step-circle" cx="991" cy="514" r="13"/><text class="step-no" x="991" y="514">15</text>
-  <text class="node-title" x="1070" y="534">正式交易流程</text>
-  <text class="node-text" x="1070" y="559">ERP 寫入</text>
-  <text class="node-text" x="1070" y="580">報關與後續作業</text>
-
-  <!-- Legend -->
-  <rect x="650" y="640" width="16" height="16" rx="3" class="agent"/><text class="legend" x="673" y="653">AI Agent</text>
-  <rect x="755" y="640" width="16" height="16" rx="3" class="human"/><text class="legend" x="778" y="653">人工覆核／核准</text>
-  <rect x="930" y="640" width="16" height="16" rx="3" class="source"/><text class="legend" x="953" y="653">資料／事件</text>
-  <rect x="1045" y="640" width="16" height="16" rx="3" class="result"/><text class="legend" x="1068" y="653">案件／正式流程</text>
+  <rect x="410" y="499" width="14" height="14" rx="3" class="agent"/><text class="legend" x="431" y="511">AI Agent</text>
+  <rect x="510" y="499" width="14" height="14" rx="3" class="rule"/><text class="legend" x="531" y="511">自動規則</text>
+  <rect x="620" y="499" width="14" height="14" rx="3" class="human"/><text class="legend" x="641" y="511">初次設定</text>
+  <rect x="730" y="499" width="14" height="14" rx="3" class="result"/><text class="legend" x="751" y="511">業務商機</text>
 </svg>
