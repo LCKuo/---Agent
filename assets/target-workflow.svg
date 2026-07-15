@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="520" viewBox="0 0 1200 520" role="img" aria-labelledby="title desc">
   <title id="title">承炘國際貿易有限公司 AI 客戶開發 Agent 自動化流程</title>
-  <desc id="desc">活動設定後，系統從授權貿易資料、公司資料與官網蒐集潛客，再研究評分、驗證 Email、產生個人化開發信、寄送、跟進及分類回覆；只有低信心例外與正向商機需要人工介入。</desc>
+  <desc id="desc">活動設定後，系統從低價來源、匯入資料與公司官網蒐集潛客，再研究評分、驗證 Email、產生個人化開發信、寄送、跟進及分類回覆；只有低信心例外與正向商機需要人工介入。</desc>
   <defs>
     <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto" markerUnits="strokeWidth">
       <path d="M 0 0 L 10 5 L 0 10 z" fill="#486581"/>
@@ -44,20 +44,20 @@
   <rect class="node human" x="28" y="76" width="196" height="96" rx="13"/>
   <circle class="step-circle" cx="47" cy="94" r="13"/><text class="step-no" x="47" y="94">1</text>
   <text class="node-title" x="126" y="112">活動設定一次</text>
-  <text class="node-text" x="126" y="139">ICP／產品知識</text>
+  <text class="node-text" x="126" y="139">目標客戶／產品知識</text>
   <text class="node-text" x="126" y="160">寄送與停止政策</text>
 
   <rect class="node source" x="264" y="76" width="196" height="96" rx="13"/>
   <circle class="step-circle" cx="283" cy="94" r="13"/><text class="step-no" x="283" y="94">2</text>
   <text class="node-title" x="362" y="112">蒐集潛客</text>
-  <text class="node-text" x="362" y="139">CRM／CSV</text>
-  <text class="node-text" x="362" y="160">貿易資料／API／官網</text>
+  <text class="node-text" x="362" y="139">低價來源／CSV</text>
+  <text class="node-text" x="362" y="160">Places API／官網</text>
 
   <rect class="node agent" x="500" y="76" width="196" height="96" rx="13"/>
   <circle class="step-circle" cx="519" cy="94" r="13"/><text class="step-no" x="519" y="94">3</text>
   <text class="node-title" x="598" y="112">A1 潛客研究</text>
   <text class="node-text" x="598" y="139">公司研究、去重</text>
-  <text class="node-text" x="598" y="160">ICP 評分與證據</text>
+  <text class="node-text" x="598" y="160">符合評分與證據</text>
 
   <rect class="node rule" x="736" y="76" width="196" height="96" rx="13"/>
   <circle class="step-circle" cx="755" cy="94" r="13"/><text class="step-no" x="755" y="94">4</text>
@@ -109,7 +109,7 @@
   <rect class="node result" x="28" y="286" width="196" height="96" rx="13"/>
   <circle class="step-circle" cx="47" cy="304" r="13"/><text class="step-no" x="47" y="304">10</text>
   <text class="node-title" x="126" y="324">正向商機</text>
-  <text class="node-text" x="126" y="350">CRM 建檔與通知</text>
+  <text class="node-text" x="126" y="350">本機建檔與通知</text>
   <text class="node-text" x="126" y="371">業務開始接手</text>
 
   <rect x="82" y="436" width="1036" height="48" rx="24" fill="#f8fafc" stroke="#bcccdc" stroke-width="1.5"/>
