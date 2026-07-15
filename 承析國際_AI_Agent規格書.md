@@ -116,7 +116,25 @@ RFQ 文件分析、供應商比價、ERP 與報關不列入本階段，未來可
 
 若使用 Microsoft 365，可透過 Microsoft Graph 建立／寄送郵件並訂閱新郵件事件；寄送需 `Mail.Send` 權限。[郵件自動化](https://learn.microsoft.com/en-us/graph/outlook-create-send-messages)、[sendMail](https://learn.microsoft.com/en-us/graph/api/user-sendmail?view=graph-rest-1.0)、[變更通知](https://learn.microsoft.com/en-us/graph/api/subscription-post-subscriptions?view=graph-rest-1.0)
 
-## 7. 自動寄送控制
+## 7. 技術可行性評估
+
+**整體判定：有條件可行。** 郵件寄送、收件事件、AI 結構化輸出與 CRM 回寫皆有成熟 API；但名單品質、Email 可送達性、寄件網域信譽及企業權限必須以 PoC 實測，不能由 AI 保證。
+
+| 能力 | 可行性 | 實作方式 | PoC 必驗證 |
+|---|---|---|---|
+| CRM／CSV 名單匯入與去重 | 高 | API 或 CSV；公司網域、Email 與 CRM ID 去重 | 實際 CRM 權限與欄位對應 |
+| 潛客研究與 ICP 評分 | 中高 | 合法資料來源＋規則評分＋AI 摘要 | 100 筆資料的正確性、來源授權與缺漏率 |
+| Email 驗證 | 中高 | 第三方驗證 API＋抑制名單 | catch-all 信箱與誤判率；不可只靠格式檢查 |
+| 個人化信件生成 | 高 | 核准知識庫＋固定 JSON Schema＋規則檢查 | 20 封中公司、姓名、產品事實錯誤為 0 |
+| 自動寄送與跟進 | 高 | Microsoft Graph 或 Gmail API＋排程佇列 | OAuth／管理員同意、寄送限制、冪等與退信 |
+| 新回覆監控 | 高 | Graph change notification 或 Gmail Pub/Sub | 訂閱續期、延遲／漏事件補抓與對話關聯 |
+| 回覆分類與停止 | 高 | AI 分類＋規則優先；低信心才人工 | 正向召回率 ≥95%；拒絕／退訂 100% 停止 |
+| CRM 商機回寫 | 高 | CRM API；以事件 ID 防止重複建立 | 沙盒建立、更新、重試與權限 |
+| 到達率與回覆率 | 不可保證 | SPF、DKIM、DMARC、暖域、名單品質與內容實驗 | 以小量真實寄送觀察；未達門檻即降速或暫停 |
+
+技術前提：取得郵件與 CRM API 權限、完成寄件網域 DNS 驗證、確認合法名單來源、選定 Email 驗證服務，並允許 webhook 或排程服務運行。AI 模型應選用支援 function calling 與 structured outputs 的版本，以固定格式串接規則引擎。[OpenAI 模型能力](https://developers.openai.com/api/docs/models/gpt-5-mini)、[Gmail 寄信](https://developers.google.com/workspace/gmail/api/guides/sending)、[Gmail Push Notifications](https://developers.google.com/workspace/gmail/api/guides/push)
+
+## 8. 自動寄送控制
 
 為減少逐封人工審核，改採「活動一次核准＋規則自動放行」：
 
@@ -126,7 +144,7 @@ RFQ 文件分析、供應商比價、ERP 與報關不列入本階段，未來可
 4. 只有低信心、資料矛盾、未核准宣稱或異常回覆才進人工佇列。
 5. 系統需有活動暫停、信箱暫停與全域緊急停止開關。
 
-## 8. 驗收測試
+## 9. 驗收測試
 
 | 測試 | 通過標準 |
 |---|---|
@@ -139,7 +157,7 @@ RFQ 文件分析、供應商比價、ERP 與報關不列入本階段，未來可
 | 權限 | Agent 無法繞過規則、抑制名單或活動限制 |
 | 冪等 | API 重試不會重複寄送同一封信 |
 
-## 9. 導入順序
+## 10. 導入順序
 
 | 階段 | 交付內容 | 上線條件 |
 |---|---|---|
@@ -148,12 +166,13 @@ RFQ 文件分析、供應商比價、ERP 與報關不列入本階段，未來可
 | 2. 小規模自動化 | 單一市場、單一信箱、活動一次核准 | 自動放行與停止條件達標 |
 | 3. 正式運作 | 多活動、多語、CRM 商機交接、KPI 儀表板 | 監控、告警與緊急停止完成 |
 
-## 10. 啟動前確認
+## 11. 啟動前確認
 
 1. 使用哪個郵件系統與 CRM？
 2. 第一個目標國家、產業、職稱與產品是什麼？
 3. 哪些產品、認證、案例與商業說法可對外使用？
 4. 活動寄送上限、跟進次數、停止條件與負責業務為何？
 5. 哪些市場或聯絡人不得自動寄送？
+6. 是否可取得郵件／CRM 管理員同意、DNS 設定及 webhook 公開端點？
 
 上述項目設定完成後，Agent 即可由「逐封人工審核」切換為「規則自動寄送、人工只處理例外與正向商機」。

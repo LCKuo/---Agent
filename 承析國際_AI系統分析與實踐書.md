@@ -197,6 +197,55 @@ flowchart LR
 
 Google Workspace 或其他 CRM 可由相同 Connector 介面替換，不改變核心流程。
 
+### 7.3 技術可行性評估
+
+#### 整體結論
+
+本案屬於**有條件可行**，適合先以「單一市場、單一寄件信箱、100 筆潛客」做 PoC，再決定是否擴大。成熟 API 已能完成寄信、收件通知、AI 分類及 CRM 回寫；主要不確定性不在模型，而在企業帳號權限、資料來源品質、Email 驗證效果及寄件網域信譽。
+
+| 子系統 | 可行性 | 建議實作 | 已知限制／依賴 | 驗證證據 |
+|---|---|---|---|---|
+| Campaign、規則與狀態機 | 高 | 自建工作流與資料庫；模型不得直接改規則 | 需先定義 ICP、頻率、停止條件 | 同一輸入可重現相同放行結果 |
+| CRM／CSV 匯入與去重 | 高 | CRM Connector；以 CRM ID、網域、Email 分層比對 | CRM 品牌、版本、API 權限與欄位尚待確認 | 100 筆測試，重複召回率 ≥95%，錯誤合併為 0 |
+| 潛客研究與 ICP 評分 | 中高 | 授權資料供應商或公開來源；規則評分，AI 僅摘要 | 聯絡人資料可能缺漏或過期；必須保存來源 | 人工抽查 100 筆，關鍵事實正確率 ≥95% |
+| Email 驗證 | 中高 | 第三方驗證 API＋歷史退信＋抑制名單 | catch-all／accept-all 無法完全判定；不得宣稱零退信 | 無效與高風險地址 100% 攔截，記錄供應商結果 |
+| 個人化內容 | 高 | 核准知識庫、模板、structured outputs、禁止詞與事實規則 | 模型仍可能生成未核准宣稱；需 fail-closed | 前 20 封人工核對，姓名、公司與產品事實錯誤為 0 |
+| 自動寄送與排程 | 高 | Mail Connector＋佇列＋idempotency key | 需 OAuth／管理員同意；服務商速率與反垃圾政策適用 | 沙盒／測試信箱寄送成功，重試不產生重複信 |
+| 新信與退信監控 | 高 | Webhook／Pub/Sub 為主，定期 reconciliation 補抓 | 訂閱需續期，事件可能延遲、重複或漏送 | 關閉 webhook 後仍可補回事件；重複事件不重複執行 |
+| 回覆分類與停止 | 高 | 規則先處理退訂／拒絕／退信，AI 處理語意分類 | 語言與短句會降低信心；低信心送例外佇列 | ≥100 封標註回覆，整體 ≥90%、正向召回 ≥95% |
+| CRM 商機與任務 | 高 | 非同步寫回＋事件 ID 去重＋失敗重試 | 權限、必填欄位與 owner 對應需先確定 | CRM sandbox 完成建立、更新、重試與去重 |
+| 到達率與回覆率 | 不可由技術保證 | SPF、DKIM、DMARC、暖域、分批寄送、退信監控 | 受網域信譽、名單與內容影響；AI 無法保證商業結果 | 小量真實寄送達門檻後才逐級加量 |
+
+AI 端建議使用支援 function calling 與 structured outputs 的模型，讓 A1、A2、A4 只輸出固定 Schema，再由規則引擎決定動作；這能降低串接與解析風險，但不能取代內容驗證。[OpenAI 模型能力](https://developers.openai.com/api/docs/models/gpt-5-mini)
+
+郵件端有兩條可實施路徑：
+
+- **Microsoft 365**：Graph `sendMail` 寄送，change notifications 接收新郵件事件；需 `Mail.Send` 等 OAuth 權限與可接收通知的 HTTPS 端點。Graph 寄送回傳 `202 Accepted` 代表已接受處理，不代表已送達，因此必須另收 delivery／bounce 事件。[sendMail](https://learn.microsoft.com/en-us/graph/api/user-sendmail?view=graph-rest-1.0)、[Change notifications](https://learn.microsoft.com/en-us/graph/api/resources/change-notifications-api-overview?view=graph-rest-1.0)
+- **Google Workspace**：Gmail API `messages.send`／`drafts.send` 寄送；`watch` 透過 Cloud Pub/Sub 通知信箱變化。`watch` 至少每 7 天續期，官方建議每日續期；通知可能延遲或遺失，因此需以 `history.list` 定期對帳補抓。[Sending Email](https://developers.google.com/workspace/gmail/api/guides/sending)、[Push Notifications](https://developers.google.com/workspace/gmail/api/guides/push)
+
+#### 尚未確認的外部條件
+
+1. 公司實際使用 Microsoft 365、Google Workspace 或其他信件服務。
+2. CRM 品牌、方案、API 配額、sandbox、必填欄位與管理員授權。
+3. 名單／聯絡人資料來源及其商業使用、保存與退訂權利。
+4. 寄件網域的 SPF、DKIM、DMARC 現況，以及是否可使用獨立開發信箱或子網域。
+5. 預計每日量、國家、語言與適用的隱私／電子郵件行銷規範。
+
+上述任一項未確認，不代表系統不能開發，但不得直接進入全自動對外寄送。
+
+### 7.4 PoC 技術驗證與 Go／No-Go
+
+| 關卡 | 實測內容 | Go 條件 | 不通過處置 |
+|---|---|---|---|
+| G1 權限與連線 | 郵件寄送、收件通知、CRM 讀寫 | 測試帳號端到端成功，權限符合最小授權 | 改用 CSV／人工匯入只可展示，不可宣布正式可用 |
+| G2 資料與去重 | 100 筆潛客匯入、來源、驗證與 CRM 去重 | 來源可追溯；錯誤合併 0；高風險 Email 全攔截 | 更換來源／驗證商或提高人工抽查比例 |
+| G3 內容 | 20 封多語個人化信件 | 關鍵事實錯誤 0；未核准宣稱 0 | 收窄知識、模板與自動放行條件 |
+| G4 寄送可靠性 | 排程、重試、退信、退訂、緊急停止 | 不重複寄送；停止事件 100% 生效 | 停留草稿模式，不開放自動寄送 |
+| G5 回覆分流 | ≥100 封已標註回覆 | 整體正確率 ≥90%；正向召回率 ≥95% | 調整分類、閾值；低信心全部人工 |
+| G6 小量真實試行 | 單一市場、單一信箱分批寄送 | 硬退信與投訴率低於公司核准門檻，無政策事故 | 自動降速／暫停，修正名單、網域或內容 |
+
+只有 G1–G5 全部通過，才可由草稿模式切到活動一次核准；G6 穩定後才增加每日量。這個門檻設計能把日常人工判斷降到例外與正向商機，同時避免在技術條件未驗證時直接大量寄信。
+
 ## 8. 資料模型
 
 ```mermaid
