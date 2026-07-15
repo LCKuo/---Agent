@@ -48,23 +48,20 @@
 
 ## 4. 目標工作流程
 
+為避免完整流程在 GitHub 被縮成難以閱讀的長圖，本節改為三頁式導覽。下方總覽可直接看懂三個階段；點選左右導覽即可閱讀各階段的大圖，不需要在圖片內上下拖曳或另外放大。
+
 ```mermaid
+%%{init: {"theme":"base", "flowchart":{"nodeSpacing":65,"rankSpacing":70}, "themeVariables":{"fontSize":"20px"}}}%%
 flowchart LR
-  A[CRM / 名單 CSV / 授權資料供應商] --> B[A1 研究與 ICP 評分]
-  B --> C{業務覆核}
-  C -->|通過| D[A2 信件草稿與 CRM 任務]
-  D --> E{人員核准}
-  E -->|寄出| F[公司郵箱]
-  F --> G[來信事件]
-  G --> H[A3 分類、翻譯、回覆草稿]
-  H --> I{業務接手}
-  I --> J[商機 / RFQ]
-  J --> K[A4 文件擷取、引用與缺漏]
-  K --> L[A6 供應商比價]
-  L --> M[A5 貿易文件核對與 ERP 草稿]
-  M --> N{貿易人員核准}
-  N --> O[ERP / 報關流程]
+  S1["① 前段<br/>潛客研究與開發信"] --> S2["② 中段<br/>郵件承接與 RFQ 分流"] --> S3["③ 後段<br/>文件、比價與 ERP 草稿"]
+
+  classDef stage fill:#E8F3FF,stroke:#1677FF,stroke-width:3px,color:#102A43,font-size:20px;
+  class S1,S2,S3 stage;
 ```
+
+|  | 流程頁面 |  |
+|:---|:---:|---:|
+|  | [從第 1 頁開始：前段業務開發 →](流程導覽/01_前段業務開發.md) | [直接前往第 3 頁：文件與 ERP →](流程導覽/03_文件與ERP.md) |
 
 ## 5. 功能規格
 
