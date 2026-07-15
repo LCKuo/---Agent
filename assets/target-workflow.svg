@@ -119,8 +119,8 @@
 
   <!-- Row 2 to row 3 -->
   <path class="arrow" d="M 126 382 V 494"/>
-  <rect x="39" y="421" width="174" height="28" rx="14" fill="#eefbe9" stroke="#389e0d"/>
-  <text class="handoff" x="126" y="440">確認有商機</text>
+  <rect x="39" y="387" width="174" height="26" rx="13" fill="#eefbe9" stroke="#389e0d"/>
+  <text class="handoff" x="126" y="406">確認有商機</text>
 
   <!-- Row 3 arrows -->
   <path class="arrow" d="M 224 544 H 263"/>
